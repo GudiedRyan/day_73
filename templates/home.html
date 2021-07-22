@@ -1,0 +1,57 @@
+{% extends "bootstrap/base.html" %}
+
+{% block content %}
+{% include "layout.html" %}
+
+<a href="{{ url_for('add_cafe') }}" type="button" class="btn btn-primary">Add a new cafe!</a>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Map Link/Directions</th>
+        <th scope="col">Picture</th>
+        <th scope="col">Seats</th>
+        <th scope="col">Toilet?</th>
+        <th scope="col">Wifi?</th>
+        <th scope="col">Socket?</th>
+        <th scope="col">Can Take Calls?</th>
+        <th scope="col">Coffee Price</th>
+    </tr>
+    </thead>
+    {% for cafe in cafes %}
+    <tr>
+        <td>{{cafe.name}}</td>
+        <td><a href='{{cafe.map_url}}'>{{cafe.location}}</a></td>
+        <td><img alt='cafe pic' src='{{cafe.img_url}}' id="pics" style="height: 75px; width: 75px;"></td>
+        <td>{{cafe.seats}}</td>
+        {% if cafe.has_toilet == 1 %}
+            <td>Yes</td>
+        {% else %}
+            <td>No</td>
+        {% endif %}
+        {% if cafe.has_wifi == 1 %}
+            <td>Yes</td>
+        {% else %}
+            <td>No</td>
+        {% endif %}
+        {% if cafe.has_sockets == 1 %}
+            <td>Yes</td>
+        {% else %}
+            <td>No</td>
+        {% endif %}
+        {% if cafe.can_take_calls == 1 %}
+            <td>Yes</td>
+        {% else %}
+            <td>No</td>
+        {% endif %}
+        <td>{{cafe.coffee_price}}</td>
+        <td><a href="{{ url_for('edit_cafe', cafe_id=cafe.id) }}">Edit</td>
+        <td><a href="{{ url_for('delete', cafe_id=cafe.id) }}">Delete</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+
+{% endblock %}
